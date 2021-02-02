@@ -101,9 +101,10 @@ const Field = (props: FieldProps) => {
             <Button
                 buttonType="naked"
                 onClick={addNewItem}
+                icon="PlusCircle"
                 style={{ marginTop: tokens.spacingS }}
             >
-                Add
+                Add Item
             </Button>
         </div>
     );
