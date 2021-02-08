@@ -8,7 +8,7 @@ The Repeater App creates a repeatable list of key-value pairs. Key-value pairs a
 
 ![Repeater App UI](./assets/repeater-app-usage.gif)
 
-The Repeater app utilizes the Contentful JSON Field to store a simple `Item` data stucture:
+The Repeater app utilizes the Contentful [JSON Field](https://www.contentful.com/developers/docs/concepts/data-model/#:~:text=JSON%20Object) to store a simple `Item` data stucture:
 
 ```ts
 {
