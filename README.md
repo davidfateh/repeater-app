@@ -1,6 +1,7 @@
 # Repeater App
 
-The Repeater App creates a repeatable list of key-value pairs. Key-value pairs are two pieces of associated information such as:
+The Repeater App creates a repeatable list of key-value pairs in the Contentful web app.
+Key-value pairs are two pieces of associated information such as:
 
 -   Ingredients list (Flour, 500 grams)
 -   Item variations and amount in stock (T-Shirt, 5 left)
@@ -41,7 +42,7 @@ An example item in the Contentful response:
     }
 }
 ```
-### Looking to use reference fields?
+### Looking for Similar Functionality Using Reference Fields?
 [Martin's Contentful Reference Matrix Field App](https://github.com/mgschoen/contentful-reference-matrix-field-app) is a continuation of this simple Repeater App
 but uses the Contentful [Reference Fields](https://www.contentful.com/help/references/)
 as a data source.
@@ -54,37 +55,28 @@ for this app as a way to show developers the uses of the App Framework.
 
 ![Youtube stream graphic](./assets/youtube-stream.jpg)
 
-
-
 ## For Developers: Running This App Locally
 
-This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
+> This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
+
+Before running the app locally, you will need to do 2 things:
+* Ensure your Contentful user is admin or developer for the organization.
+* Create an [`AppDefinition`](https://www.contentful.com/developers/docs/extensibility/app-framework/app-definition/)
+in your organization with the following properties:
+    * The App URL: http://localhost:3000
+    * An entry field location with a type of JSON Object
+    * An instance parameter of type short text with the id `valueName`
+
+If you are using the UI to create the `AppDefinition`, it should look like this:
+
+![Repeater App Definition UI](./assets/repeater-appdefinition.png)
 
 
-In the project directory, you can run:
+Once your app definition is created, running `npm start` will start a local server on
+port 3000 (http://localhost:3000).
 
-#### `npm start`
-
-Creates or updates your app definition in Contentful, and runs the app in development mode.
-Open your app to view it in the browser.
-
-The page will reload if you make edits.
-You will also see any lint errors in the console.
-
-#### `npm run build`
-
-Builds the app for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
-
-## Libraries to use
-
-To make your app look and feel like Contentful use the following libraries:
-
--   [Forma 36](https://f36.contentful.com/) – Contentful's design system
--   [Contentful Field Editors](https://www.contentful.com/developers/docs/extensibility/field-editors/) – Contentful's field editor React components
+You must create or modify a content type which has a JSON field in order to see the app
+inside of the Contentful web app.
 
 ## Learn More
 
