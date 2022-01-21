@@ -6,7 +6,7 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    TextField, Select, Option, Subheading
+    TextField, Select, Option
 } from '@contentful/forma-36-react-components';
 import tokens from '@contentful/forma-36-tokens';
 import { FieldExtensionSDK } from '@contentful/app-sdk';
@@ -20,7 +20,7 @@ interface FieldProps {
 interface Item {
     id: string;
     key: string;
-    value: string;
+    value: string[];
 }
 
 /** A simple utility function to create a 'blank' item
@@ -30,7 +30,7 @@ function createItem(): Item {
     return {
         id: uuid(),
         key: '',
-        value: '',
+        value: [''],
     };
 }
 
@@ -42,6 +42,15 @@ function createItem(): Item {
 const Field = (props: FieldProps) => {
     const { valueName = 'Value' } = props.sdk.parameters.instance as any;
     const [items, setItems] = useState<Item[]>([]);
+
+    // Just in case there are single text in the json change to array.
+    items.map(item =>{
+        if (!Array.isArray(item.value)){
+            item.value = [item.value]
+            return item
+        }
+        return item
+    })
 
     useEffect(() => {
         // This ensures our app has enough space to render
@@ -83,22 +92,22 @@ const Field = (props: FieldProps) => {
                 {
                     id: uuid(),
                     key: 'returns-cta-button-copy',
-                    value: '',
+                    value: [''],
                 },
                 {
                     id: uuid(),
                     key: 'returns-menu-terms-copy',
-                    value: '',
+                    value: [''],
                 },
                 {
                     id: uuid(),
                     key: 'returns-menu-terms-copy-cta-link',
-                    value: '',
+                    value: [''],
                 },
                 {
                     id: uuid(),
                     key: 'returns-menu-terms-copy-cta-text',
-                    value: '',
+                    value: [''],
                 },
             ]
             props.sdk.field.setValue(items);
@@ -125,24 +134,15 @@ const Field = (props: FieldProps) => {
                         const styledWord = key.map((word) => {
                             return word[0].toUpperCase() + word.substring(1);
                         }).join(" ");
+                        console.log( 'value', item.value );
                         return (
                             <TableRow key={item.id}>
-                                {/*  <TableCell>
-                               <TextField
-                                    id="key"
-                                    name="key"
-                                    labelText="Setting Name"
-                                    value={item.key}
-                                    onChange={createOnChangeHandler(item, 'key')}
-                                    textInputProps={{disabled: true}}
-                                />
-                            </TableCell>*/}
                                 <TableCell>
                                     <TextField
                                         id="value"
                                         name="value"
                                         labelText={styledWord}
-                                        value={item.value}
+                                        value={item.value ? item.value.join(',') : ''}
                                         onChange={createOnChangeHandler(item, 'value')}
                                         textInputProps={{placeholder: 'Enter a value and press enter'}}
                                     />
