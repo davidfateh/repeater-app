@@ -6,7 +6,7 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    TextField,
+    TextField, Select, Option, Subheading
 } from '@contentful/forma-36-react-components';
 import tokens from '@contentful/forma-36-tokens';
 import { FieldExtensionSDK } from '@contentful/app-sdk';
@@ -34,9 +34,9 @@ function createItem(): Item {
     };
 }
 
-/** The Field component is the Repeater App which shows up 
+/** The Field component is the Repeater App which shows up
  * in the Contentful field.
- * 
+ *
  * The Field expects and uses a `Contentful JSON field`
  */
 const Field = (props: FieldProps) => {
@@ -61,7 +61,7 @@ const Field = (props: FieldProps) => {
     };
 
     /** Creates an `onChange` handler for an item based on its `property`
-     * @returns A function which takes an `onChange` event 
+     * @returns A function which takes an `onChange` event
     */
     const createOnChangeHandler = (item: Item, property: 'key' | 'value') => (
         e: React.ChangeEvent<HTMLInputElement>
@@ -74,6 +74,37 @@ const Field = (props: FieldProps) => {
         props.sdk.field.setValue(itemList);
     };
 
+    const dropDownChangeHandler = () => (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selected = e.target.value
+        // When the select is changed remove the current settings
+        props.sdk.field.setValue([]);
+        if (selected === 'returnsSettings'){
+            const items = [
+                {
+                    id: uuid(),
+                    key: 'returns-cta-button-copy',
+                    value: '',
+                },
+                {
+                    id: uuid(),
+                    key: 'returns-menu-terms-copy',
+                    value: '',
+                },
+                {
+                    id: uuid(),
+                    key: 'returns-menu-terms-copy-cta-link',
+                    value: '',
+                },
+                {
+                    id: uuid(),
+                    key: 'returns-menu-terms-copy-cta-text',
+                    value: '',
+                },
+            ]
+            props.sdk.field.setValue(items);
+        }
+    };
+
     /** Deletes an item from the list */
     const deleteItem = (item: Item) => {
         props.sdk.field.setValue(items.filter((i) => i.id !== item.id));
@@ -81,18 +112,26 @@ const Field = (props: FieldProps) => {
 
     return (
         <div>
+            <div className="TypeDropDown" style={{marginBottom: '15px'}}>
+                <Select className="TypeDropDown_Select" onChange={dropDownChangeHandler()}>
+                    <Option value="globalSettings">Global Settings</Option>
+                    <Option value="returnsSettings">Returns Settings</Option>
+                </Select>
+            </div>
             <Table>
                 <TableBody>
                     {items.map((item) => (
                         <TableRow key={item.id}>
                             <TableCell>
-                                <TextField
+{/*                                <TextField
                                     id="key"
                                     name="key"
-                                    labelText="Item Name"
+                                    labelText="Setting Name"
                                     value={item.key}
                                     onChange={createOnChangeHandler(item, 'key')}
-                                />
+                                    textInputProps={{disabled: true}}
+                                />*/}
+                                <Subheading>{item.key.replaceAll('-', ' ')}</Subheading>
                             </TableCell>
                             <TableCell>
                                 <TextField
