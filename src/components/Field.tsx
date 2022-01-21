@@ -120,37 +120,43 @@ const Field = (props: FieldProps) => {
             </div>
             <Table>
                 <TableBody>
-                    {items.map((item) => (
-                        <TableRow key={item.id}>
-                            <TableCell>
-{/*                                <TextField
+                    {items.map((item) => {
+                        const key = item.key.split('-')
+                        const styledWord = key.map((word) => {
+                            return word[0].toUpperCase() + word.substring(1);
+                        }).join(" ");
+                        return (
+                            <TableRow key={item.id}>
+                                {/*  <TableCell>
+                               <TextField
                                     id="key"
                                     name="key"
                                     labelText="Setting Name"
                                     value={item.key}
                                     onChange={createOnChangeHandler(item, 'key')}
                                     textInputProps={{disabled: true}}
-                                />*/}
-                                <Subheading>{item.key.replaceAll('-', ' ')}</Subheading>
-                            </TableCell>
-                            <TableCell>
-                                <TextField
-                                    id="value"
-                                    name="value"
-                                    labelText={valueName}
-                                    value={item.value}
-                                    onChange={createOnChangeHandler(item, 'value')}
                                 />
-                            </TableCell>
-                            <TableCell align="right">
-                                <EditorToolbarButton
-                                    label="delete"
-                                    icon="Delete"
-                                    onClick={() => deleteItem(item)}
-                                />
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                            </TableCell>*/}
+                                <TableCell>
+                                    <TextField
+                                        id="value"
+                                        name="value"
+                                        labelText={styledWord}
+                                        value={item.value}
+                                        onChange={createOnChangeHandler(item, 'value')}
+                                        textInputProps={{placeholder: 'Enter a value and press enter'}}
+                                    />
+                                </TableCell>
+                                <TableCell align="right">
+                                    <EditorToolbarButton
+                                        label="delete"
+                                        icon="Delete"
+                                        onClick={() => deleteItem(item)}
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
             </Table>
             <Button
