@@ -169,13 +169,6 @@ const Field = (props: FieldProps) => {
                                         textInputProps={{placeholder: 'Enter a value and press enter'}}
                                     />
                                 </TableCell>
-                                <TableCell align="right">
-                                    <EditorToolbarButton
-                                        label="delete"
-                                        icon="Delete"
-                                        onClick={() => deleteItem(item)}
-                                    />
-                                </TableCell>
                             </TableRow>
                         )
                     })}
