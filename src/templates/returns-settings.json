@@ -1,0 +1,20 @@
+{
+  "settingsType": "returnsSettings",
+  "fields":
+    {
+      "ctaButtonCopy": [
+        "My Boll & Branch Order",
+        "A Gift - refunded with a Gift Card",
+        "Mattress Foundation, Mattress Topper & Rugs"
+      ],
+      "menuTermsCopy": "",
+      "menuTermsCopyCtaLink": "Click me",
+      "menuTermsCopyCtaCopy": ""
+    },
+  "validation": {
+    "ctaButtonCopy": "string[]",
+    "menuTermsCopy": "string",
+    "menuTermsCopyCtaLink": "string",
+    "menuTermsCopyCtaCopy": "string"
+  }
+}
