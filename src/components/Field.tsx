@@ -14,6 +14,7 @@ import {v4 as uuid} from 'uuid';
 import {ReturnSettings} from '../classes/ReturnsSettings';
 import {GlobalSettings} from '../classes/GlobalSettings';
 import {Item} from '../classes/Item';
+import {BaseSettings} from '../classes/BaseSettings';
 
 interface FieldProps {
     sdk: FieldExtensionSDK;
@@ -22,7 +23,8 @@ interface FieldProps {
 interface InitialState {
     selectedValue: string
     items: Item[]
-    dirty: boolean
+    dirty: boolean,
+    class: BaseSettings
 }
 
 /** A simple utility function to create a 'blank' item
@@ -32,7 +34,7 @@ function createItem(): Item {
     return {
         id: uuid(),
         key: '',
-        value: [''],
+        value: '',
     };
 }
 
@@ -68,45 +70,35 @@ const Field = (props: FieldProps) => {
     const initState : any = {
         selectedValue: '',
         items: [],
-        dirty: false
+        dirty: false,
+        class: null
     }
     const { template = 'globalSettings' } = props.sdk.parameters.instance as any;
     const [state, setState] = useState<InitialState>(initState);
 
     if (state.items.length === 0){
-        setState({...state, selectedValue: template})
-        const settings = getClass(template)
+        //setState({...state, selectedValue: template})
+        let settings = getClass(template)
         const fields = settings.getFields()
         const items = buildFields(fields)
-        setState({...state, items: items, dirty: true})
+        setState({...state, selectedValue: template, items: items, class: settings, dirty: true})
+        console.log( state );
     }
-
-    // Just in case there are single text in the json change to array.
-    state.items.map(item =>{
-        if (!Array.isArray(item.value)){
-            item.value = [item.value]
-            return item
-        }
-        return item
-    })
 
     useEffect(() => {
         // This ensures our app has enough space to render
         props.sdk.window.startAutoResizer();
 
         // Every time we change the value on the field, we update internal state
-        props.sdk.field.onValueChanged((value: Item[]) => {
-            if (Array.isArray(value) && state.dirty) {
-                console.log( 'state is dirty', value );
-                setState({...state, items: value, dirty: false});
+        props.sdk.field.onValueChanged((value: InitialState) => {
+            if (value && state.dirty) {
+                console.log( 'State is dirty.' );
+                setState({...state, items: value.items, dirty: false});
+                console.log( state.class );
+                state.class.validate(state.items)
             }
         });
     });
-
-    /** Adds another item to the list */
-    const addNewItem = () => {
-        props.sdk.field.setValue([...state.items, createItem()]);
-    };
 
     /** Creates an `onChange` handler for an item based on its `property`
      * @returns A function which takes an `onChange` event
@@ -115,27 +107,28 @@ const Field = (props: FieldProps) => {
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
         const itemList = state.items.concat();
+        // Find the index by the unique ID which is assigned to each item.
         const index = itemList.findIndex((i) => i.id === item.id);
+        //Change the field which has been changed by updating the internal state.
         itemList.splice(index, 1, { ...item, [property]: e.target.value });
-        props.sdk.field.setValue(itemList);
+        // Set the state to dirty before we update the field so it can actually be updated.
+        setState({...state, dirty: true})
+        // Update the actual contentful JSON field behind the scenes.
+        props.sdk.field.setValue({...state, items: itemList});
     };
 
     const dropDownChangeHandler = () => (e: React.ChangeEvent<HTMLSelectElement>) => {
+        // Get the selected element val.
         const selected = e.target.value
-
-        // When the select is changed remove the current settings
-        props.sdk.field.setValue([]);
+        // Grab the correct class.
         const settings = getClass(selected)
+        //Grab the fields from the json settings file.
         const fields = settings.getFields()
+        // Build the items based on the fields.
         const items = buildFields(fields)
-        setState({...state, items: items})
-        props.sdk.field.setValue(state.items);
-
-    };
-
-    /** Deletes an item from the list */
-    const deleteItem = (item: Item) => {
-        props.sdk.field.setValue(state.items.filter((i) => i.id !== item.id));
+        // Set the state to dirty ready to update.
+        setState({...state, dirty: true})
+        props.sdk.field.setValue({...state, selectedValue: selected, items: items});
     };
 
     return (
@@ -151,11 +144,9 @@ const Field = (props: FieldProps) => {
             </div>
             <Table>
                 <TableBody>
-                    {state.items.map((item) => {
-                        const key = item.key.split('-')
-                        const styledWord = key.map((word) => {
-                            return word[0].toUpperCase() + word.substring(1);
-                        }).join(" ");
+                    {state.items.length > 0 && state.items.map((item) => {
+                        const key = item.key.replace( /([A-Z])/g, " $1" );
+                        const styledWord = key.charAt(0).toUpperCase() + key.slice(1);
                         console.log( 'value', item.value );
                         return (
                             <TableRow key={item.id}>
@@ -164,7 +155,7 @@ const Field = (props: FieldProps) => {
                                         id="value"
                                         name="value"
                                         labelText={styledWord}
-                                        value={item.value ? item.value.join(',') : ''}
+                                        value={item.value}
                                         onChange={createOnChangeHandler(item, 'value')}
                                         textInputProps={{placeholder: 'Enter a value and press enter'}}
                                     />
