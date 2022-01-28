@@ -2,7 +2,7 @@
   "settingsType": "globalSettings",
   "fields":
     {
-      "fontSize": 12
+      "fontSize": "12"
     },
   "validation": {
     "fontSize": "number"

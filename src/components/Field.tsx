@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-    EditorToolbarButton,
     Option,
     Select,
     Table,
@@ -15,6 +14,7 @@ import {ReturnSettings} from '../classes/ReturnsSettings';
 import {GlobalSettings} from '../classes/GlobalSettings';
 import {Item} from '../classes/Item';
 import {BaseSettings} from '../classes/BaseSettings';
+import optionFields from '../templates/option-fields.json'
 
 // Sets the interface for the sdk on props so it only uses thr Contentful FieldExtensionSDK
 interface FieldProps {
@@ -92,7 +92,8 @@ const Field = (props: FieldProps) => {
         // Every time we change the value on the field, we update internal state
         props.sdk.field.onValueChanged((value: InitialState) => {
             if (value && state.dirty) {
-                setState({...state, items: value.items, dirty: false});
+                console.log( 'dirty state', value );
+                setState({...state, selectedValue: value.selectedValue, items: value.items, dirty: false});
                 // Validate the inputs by passing over the changed fields.
                 // This is done through the fields sdk not state as the state is not updated in time.
                 state.class.validate(value.items)
@@ -132,9 +133,25 @@ const Field = (props: FieldProps) => {
         const items = buildFields(fields)
         // Set the state to dirty ready to update.
         setState({...state, dirty: true})
+        console.log( 'state on change', state);
+        console.log( 'items', items);
+        console.log( 'selected', selected);
         // Update the field in Contentful
-        props.sdk.field.setValue({...state, selectedValue: selected, items: items});
+        props.sdk.field.setValue({...state, items: items, selectedValue: selected});
     };
+
+    function createSelectOptions() {
+        const items: JSX.Element[] = []
+        const fields = optionFields?.fields
+        if (fields?.length > 0){
+            fields.forEach(field => {
+                items.push(<Option key={field.id} value={field.id}>{field.value}</Option>);
+            })
+        }
+        return items
+    }
+
+    console.log( 'render state', state);
 
     /**
     * The render of the field itself.
@@ -145,9 +162,9 @@ const Field = (props: FieldProps) => {
                 <Select className="TypeDropDown_Select"
                         onChange={dropDownChangeHandler()}
                         value={state.selectedValue}
+
                 >
-                    <Option value="globalSettings">Global Settings</Option>
-                    <Option value="returnsSettings">Returns Settings</Option>
+                    {createSelectOptions()}
                 </Select>
             </div>
             <Table>

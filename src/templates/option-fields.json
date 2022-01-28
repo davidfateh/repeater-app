@@ -1,0 +1,12 @@
+{
+  "fields": [
+    {
+      "id": "globalSettings",
+      "value": "Global settings"
+    },
+    {
+      "id": "returnsSettings",
+      "value": "Returns settings"
+    }
+  ]
+}

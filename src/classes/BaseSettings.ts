@@ -29,6 +29,7 @@ export abstract class BaseSettings {
             item.error = ''
             // If there is a validation field which matches the item.
             if (validationField) {
+                const isValidNumber = item?.value?.match(/^\d*(\.\d+)?$/)
                 if (validationField.includes('>')) {
                     // Check to see if we need to do a greater than check on an int
                     const numberCheck = validationField.split('>')?.[1]?.trim()
@@ -47,16 +48,16 @@ export abstract class BaseSettings {
                             return
                         }
                     }
-                } else if (validationField === 'string' && typeof item.value === validationField) {
+                } else if (validationField === 'string' && typeof item?.value === validationField) {
                     return
                 } else if (validationField === 'number' &&
-                    typeof parseFloat(item.value) === validationField &&
-                    item.value.match(/^\d*(\.\d+)?$/) &&
-                    !isNaN(parseFloat(item.value))) {
+                    typeof parseFloat(item?.value) === validationField &&
+                    isValidNumber &&
+                    !isNaN(parseFloat(item?.value))) {
                     // Check to make sure the value passes being converted into a number.
                     // Also check via regex that is only has numbers or is a valid float.
                     return
-                } else if (item.value === '') {
+                } else if (item?.value === '') {
                     // If value is empty do nothing.
                     return
                 }

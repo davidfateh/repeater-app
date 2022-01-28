@@ -6,7 +6,7 @@
       "menuTermsCopy": "",
       "menuTermsCopyCtaLink": "Click me",
       "menuTermsCopyCtaCopy": "",
-      "returnDays": 36
+      "returnDays": "36"
     },
   "validation": {
     "ctaButtonCopy": "string",
