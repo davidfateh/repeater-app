@@ -60,7 +60,6 @@ export abstract class BaseSettings {
                     // If value is empty do nothing.
                     return
                 }
-                console.log(item.key + ' IS INVALID');
                 item.error = 'This field is invalid, should be a ' + validationField
             }
         })

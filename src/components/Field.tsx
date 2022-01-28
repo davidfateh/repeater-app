@@ -92,7 +92,6 @@ const Field = (props: FieldProps) => {
         // Every time we change the value on the field, we update internal state
         props.sdk.field.onValueChanged((value: InitialState) => {
             if (value && state.dirty) {
-                console.log( 'State is dirty.');
                 setState({...state, items: value.items, dirty: false});
                 // Validate the inputs by passing over the changed fields.
                 // This is done through the fields sdk not state as the state is not updated in time.
