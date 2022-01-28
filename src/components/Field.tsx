@@ -16,6 +16,7 @@ import {GlobalSettings} from '../classes/GlobalSettings';
 import {Item} from '../classes/Item';
 import {BaseSettings} from '../classes/BaseSettings';
 
+// Sets the interface for the sdk on props so it only uses thr Contentful FieldExtensionSDK
 interface FieldProps {
     sdk: FieldExtensionSDK;
 }
@@ -27,17 +28,9 @@ interface InitialState {
     class: BaseSettings
 }
 
-/** A simple utility function to create a 'blank' item
- * @returns A blank `Item` with a uuid
-*/
-function createItem(): Item {
-    return {
-        id: uuid(),
-        key: '',
-        value: '',
-    };
-}
-
+/*
+* Get the correct class based on the settings which have been selected.
+* */
 function getClass(value: string): any {
     if(value === 'returnsSettings'){
         return new ReturnSettings()
@@ -46,6 +39,9 @@ function getClass(value: string): any {
     }
 }
 
+/*
+* Build out each field with their value from the JSON file if there is not already data.
+* */
 function buildFields(fields: any): Item[] {
 
     const fieldKeys = Object.keys(fields)
@@ -55,7 +51,8 @@ function buildFields(fields: any): Item[] {
         return {
             id: uuid(),
             key: fieldName,
-            value: field
+            value: field,
+            error: ''
         }
     })
 }
@@ -76,13 +73,14 @@ const Field = (props: FieldProps) => {
     const { template = 'globalSettings' } = props.sdk.parameters.instance as any;
     const [state, setState] = useState<InitialState>(initState);
 
+    /*
+    * Set the default items if there are no items in the field on load.
+    * */
     if (state.items.length === 0){
-        //setState({...state, selectedValue: template})
         let settings = getClass(template)
         const fields = settings.getFields()
         const items = buildFields(fields)
         setState({...state, selectedValue: template, items: items, class: settings, dirty: true})
-        console.log( state );
     }
 
     useEffect(() => {
@@ -92,12 +90,14 @@ const Field = (props: FieldProps) => {
         // Every time we change the value on the field, we update internal state
         props.sdk.field.onValueChanged((value: InitialState) => {
             if (value && state.dirty) {
-                console.log( 'State is dirty.' );
+                console.log( 'State is dirty.');
                 setState({...state, items: value.items, dirty: false});
-                console.log( state.class );
-                state.class.validate(state.items)
+                // Validate the inputs by passing over the changed fields.
+                // This is done through the fields sdk not state as the state is not updated in time.
+                state.class.validate(value.items)
             }
         });
+        // The updated state is available here though. Just a note for future.
     });
 
     /** Creates an `onChange` handler for an item based on its `property`
@@ -128,6 +128,7 @@ const Field = (props: FieldProps) => {
         const items = buildFields(fields)
         // Set the state to dirty ready to update.
         setState({...state, dirty: true})
+        // Update the field in Contentful
         props.sdk.field.setValue({...state, selectedValue: selected, items: items});
     };
 
@@ -147,7 +148,6 @@ const Field = (props: FieldProps) => {
                     {state.items.length > 0 && state.items.map((item) => {
                         const key = item.key.replace( /([A-Z])/g, " $1" );
                         const styledWord = key.charAt(0).toUpperCase() + key.slice(1);
-                        console.log( 'value', item.value );
                         return (
                             <TableRow key={item.id}>
                                 <TableCell>
@@ -158,6 +158,7 @@ const Field = (props: FieldProps) => {
                                         value={item.value}
                                         onChange={createOnChangeHandler(item, 'value')}
                                         textInputProps={{placeholder: 'Enter a value and press enter'}}
+                                        validationMessage={item.error}
                                     />
                                 </TableCell>
                             </TableRow>

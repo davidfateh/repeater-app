@@ -16,19 +16,28 @@ export abstract class BaseSettings {
      * */
     validate(items: Item[]) : boolean {
         const validationFields = this.getValidationFields()
-        console.log( 'validationFields', validationFields);
 
         items.forEach(item => {
-            console.log( 'validation item', item );
             const validationField = validationFields[item.key]
-            console.log( 'validationField', validationField );
+            // Reset the errors before running the validation again.
+            item.error = ''
             // If there is a validation field which matches the item.
             if (validationField){
-                console.log( 'validationField', validationField );
-                console.log( 'typeof item.value', typeof item.value );
-                if (typeof item.value === validationField){
-                    console.log( 'validation for item' + item.key + 'passes validation'  );
+                if (validationField === 'string' && typeof item.value === validationField){
+                   console.log( 'PASSED STRING: '+ item.key,validationField );
+                   return
+                } else if (validationField === 'number' &&
+                    typeof parseFloat(item.value) === validationField &&
+                    item.value.match(/^\d*(\.\d+)?$/) &&
+                    !isNaN(parseFloat(item.value))){
+                    console.log( 'PASSED NUM: ' + item.key, parseFloat(item.value) );
+                    return
+                } else if (item.value === ''){
+                    console.log( 'value is empty so do nothing' );
+                    return
                 }
+                console.log( item.key + ' IS INVALID');
+                item.error = 'This field is invalid, should be a ' + validationField
             }
         })
 
