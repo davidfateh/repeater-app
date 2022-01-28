@@ -137,6 +137,9 @@ const Field = (props: FieldProps) => {
         props.sdk.field.setValue({...state, selectedValue: selected, items: items});
     };
 
+    /**
+    * The render of the field itself.
+    * */
     return (
         <div>
             <div className="TypeDropDown" style={{marginBottom: '15px'}}>

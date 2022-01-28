@@ -13,6 +13,6 @@
     "menuTermsCopy": "string",
     "menuTermsCopyCtaLink": "string",
     "menuTermsCopyCtaCopy": "number",
-    "returnDays": "number"
+    "returnDays": "< 50"
   }
 }
