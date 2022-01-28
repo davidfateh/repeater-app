@@ -21,6 +21,7 @@ interface FieldProps {
     sdk: FieldExtensionSDK;
 }
 
+// Set the structure for the Initial State object.
 interface InitialState {
     selectedValue: string
     items: Item[]
@@ -64,6 +65,7 @@ function buildFields(fields: any): Item[] {
  */
 const Field = (props: FieldProps) => {
 
+    // Set up the initial state for the React state.
     const initState : any = {
         selectedValue: '',
         items: [],
@@ -117,6 +119,9 @@ const Field = (props: FieldProps) => {
         props.sdk.field.setValue({...state, items: itemList});
     };
 
+    /*
+    * Run through the code needed when the settings drop down is changed.
+    * */
     const dropDownChangeHandler = () => (e: React.ChangeEvent<HTMLSelectElement>) => {
         // Get the selected element val.
         const selected = e.target.value
