@@ -139,8 +139,6 @@ const Field = (props: FieldProps) => {
         return items
     }
 
-    console.log( 'render state', state);
-
     /**
     * The render of the field itself.
     * */
