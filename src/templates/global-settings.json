@@ -2,9 +2,15 @@
   "settingsType": "globalSettings",
   "fields":
     {
-      "fontSize": "12"
+      "globalFontToggle": "true",
+      "globalPromoFontFamily": "juana"
     },
+  "helpText": {
+    "globalFontToggle": "Use 'true' to put it live | Use 'false' to disable it",
+    "globalPromoFontFamily": "Available fonts are: juana, louize, fakt"
+  },
   "validation": {
-    "fontSize": "number"
+    "globalFontToggle": "string",
+    "globalPromoFontFamily": "string"
   }
 }
