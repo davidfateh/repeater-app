@@ -2,17 +2,27 @@
   "settingsType": "returnsSettings",
   "fields":
     {
-      "ctaButtonCopy":"My Boll & Branch Order, A Gift - refunded with a Gift Card, Mattress Foundation, Mattress Topper & Rugs",
-      "menuTermsCopy": "",
-      "menuTermsCopyCtaLink": "Click me",
-      "menuTermsCopyCtaCopy": "",
-      "returnDays": "36"
+      "ctaButtonCopy":"My Boll & Branch Order|A Gift - refunded with a Gift Card|Mattress Foundation, Mattress Topper & Rugs",
+      "menuTermsCopy": "All Gift Returns will be refunded with a Boll & Branch Gift Card. Read our full return policy",
+      "menuTermsCopyCtaLink": "/pages/faqs",
+      "menuTermsCopyCtaCopy": "Click here.",
+      "returnDays": "36",
+      "excludedProductIds": ""
     },
   "validation": {
     "ctaButtonCopy": "string",
     "menuTermsCopy": "string",
     "menuTermsCopyCtaLink": "string",
-    "menuTermsCopyCtaCopy": "number",
-    "returnDays": "number"
+    "menuTermsCopyCtaCopy": "string",
+    "returnDays": "number",
+    "excludedProductIds": "string"
+  },
+  "helpText": {
+    "ctaButtonCopy":"Separate each button in order using | ",
+    "menuTermsCopy": "The terms to show under the buttons on the main Returns page.",
+    "menuTermsCopyCtaLink": "The url for the link in the terms copy to go to i.e /pages/faqs",
+    "menuTermsCopyCtaCopy": "The 'text' for the link that is in the terms copy",
+    "returnDays": "Select the number of days to allow for the returns window.",
+    "excludedProductIds": "Product IDs to exclude from returns. Separate using | "
   }
 }

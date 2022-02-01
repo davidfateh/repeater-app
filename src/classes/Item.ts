@@ -3,5 +3,6 @@ export interface Item {
     id: string;
     key: string;
     value: string;
-    error: string
+    error: string;
+    helpText: string;
 }

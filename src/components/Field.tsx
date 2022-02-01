@@ -26,7 +26,7 @@ interface InitialState {
     selectedValue: string
     items: Item[]
     dirty: boolean,
-    class: BaseSettings
+    class: BaseSettings,
 }
 
 /*
@@ -42,20 +42,11 @@ function getClass(value: string): any {
 
 /*
 * Build out each field with their value from the JSON file if there is not already data.
+*
+* The fields are built in the class object itself.
 * */
-function buildFields(fields: any): Item[] {
-
-    const fieldKeys = Object.keys(fields)
-    return [...Array(fieldKeys.length)].map((_, i) => {
-        const fieldName = fieldKeys[i]
-        const field = fields[fieldName];
-        return {
-            id: uuid(),
-            key: fieldName,
-            value: field,
-            error: ''
-        }
-    })
+function buildFields(classObj : any): Item[] {
+    return classObj?.getFields()
 }
 
 /** The Field component is the Repeater App which shows up
@@ -79,10 +70,10 @@ const Field = (props: FieldProps) => {
     * Set the default items if there are no items in the field on load.
     * */
     if (state.items.length === 0){
-        let settings = getClass(template)
-        const fields = settings.getFields()
-        const items = buildFields(fields)
-        setState({...state, selectedValue: template, items: items, class: settings, dirty: true})
+        let classObject = getClass(template)
+        const fields = classObject.getFields()
+        const items = buildFields(classObject)
+        setState({...state, selectedValue: template, items: items, class: classObject, dirty: true})
     }
 
     useEffect(() => {
@@ -126,16 +117,11 @@ const Field = (props: FieldProps) => {
         // Get the selected element val.
         const selected = e.target.value
         // Grab the correct class.
-        const settings = getClass(selected)
-        //Grab the fields from the json settings file.
-        const fields = settings.getFields()
-        // Build the items based on the fields.
-        const items = buildFields(fields)
+        const classObj = getClass(selected)
+        // Build the items based on the fields from the classObject.
+        const items = buildFields(classObj)
         // Set the state to dirty ready to update.
         setState({...state, dirty: true})
-        console.log( 'state on change', state);
-        console.log( 'items', items);
-        console.log( 'selected', selected);
         // Update the field in Contentful
         props.sdk.field.setValue({...state, items: items, selectedValue: selected});
     };
@@ -182,7 +168,8 @@ const Field = (props: FieldProps) => {
                                         value={item.value}
                                         onChange={createOnChangeHandler(item, 'value')}
                                         textInputProps={{placeholder: 'Enter a value and press enter'}}
-                                        validationMessage={item.error}
+                                        validationMessage={item?.error}
+                                        helpText={item?.helpText}
                                     />
                                 </TableCell>
                             </TableRow>

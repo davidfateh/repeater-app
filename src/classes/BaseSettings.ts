@@ -1,4 +1,5 @@
 import {Item} from './Item';
+import {v4 as uuid} from 'uuid';
 
 export abstract class BaseSettings {
     json: any
@@ -6,8 +7,26 @@ export abstract class BaseSettings {
     /*
     * Get the fields from the fields array in the JSON file.
     * */
-    getFields(): JSON {
+    getFieldsJson(): any {
         return this.json.fields
+    }
+
+    public getFields(): any {
+        const fields = this.getFieldsJson()
+        const helpTextFields = this.getHelpTextFields()
+        const fieldKeys = Object.keys(fields)
+        return [...Array(fieldKeys.length)].map((_, i) => {
+            const fieldName = fieldKeys[i]
+            const field = fields[fieldName];
+            const helpText = helpTextFields[fieldName] ?? ''
+            return {
+                id: uuid(),
+                key: fieldName,
+                value: field,
+                error: '',
+                helpText: helpText
+            }
+        })
     }
 
     /*
@@ -68,4 +87,7 @@ export abstract class BaseSettings {
         return false
     }
 
+    private getHelpTextFields(): any {
+        return this.json.helpText
+    }
 }
