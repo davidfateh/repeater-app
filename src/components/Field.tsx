@@ -6,7 +6,9 @@ import {
     TableBody,
     TableCell,
     TableRow,
-    TextField
+    TextField,
+    FormLabel,
+    Note
 } from '@contentful/forma-36-react-components';
 import {FieldExtensionSDK} from '@contentful/app-sdk';
 import {v4 as uuid} from 'uuid';
@@ -144,7 +146,11 @@ const Field = (props: FieldProps) => {
     * */
     return (
         <div>
-            <div className="TypeDropDown" style={{marginBottom: '15px'}}>
+            <Note noteType={'primary'} style={{marginBottom: '15px'}}>
+                Selecting a new settings type from the dropdown will reset your fields.
+                Reload the page without saving to revert.</Note>
+            <FormLabel htmlFor={'TypeDropDown_Select'}>Select a settings template</FormLabel>
+            <div className="TypeDropDown" style={{marginBottom: '15px', padding: '5px'}}>
                 <Select className="TypeDropDown_Select"
                         onChange={dropDownChangeHandler()}
                         value={state.selectedValue}
