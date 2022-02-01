@@ -7,7 +7,7 @@
       "menuTermsCopyCtaLink": "/pages/faqs",
       "menuTermsCopyCtaCopy": "Click here.",
       "returnDays": "36",
-      "excludedProductIds": ""
+      "excludedProductIds": "7555231937|5972011521|5110235201595|6657478131771"
     },
   "validation": {
     "ctaButtonCopy": "string",
@@ -23,6 +23,6 @@
     "menuTermsCopyCtaLink": "The url for the link in the terms copy to go to i.e /pages/faqs",
     "menuTermsCopyCtaCopy": "The 'text' for the link that is in the terms copy",
     "returnDays": "Select the number of days to allow for the returns window.",
-    "excludedProductIds": "Product IDs to exclude from returns. Separate using | "
+    "excludedProductIds": "Product IDs to exclude from returns (defaults to exclude gift cards). Separate products using | "
   }
 }
