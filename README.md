@@ -1,6 +1,8 @@
-# Global Settings App
+# Pensieve
 
-The Global settings app creates list of key-value pairs in the Contentful web app by using templates that you select on
+![Happiness can be found in the darkest of times, if one only remembers to turn on the light](https://media.giphy.com/media/1BdrmMkllI1e2gdPaS/giphy.gif)
+
+The Pensieve app creates list of key-value pairs in the Contentful web app by using templates that you select on
 the screen. Key-value pairs are two pieces of associated information such as:
 
 The Repeater app utilizes the
