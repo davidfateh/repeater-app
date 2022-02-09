@@ -14,6 +14,12 @@ RUN rm -rf node_modules .next
 ## install project dependencies
 RUN npm install
 
+
+## SET THE HEALTH CHECKS
+RUN /srv/app/scripts/docker/build_log.sh
+RUN cat public/build.log
+
+
 EXPOSE 3000
 CMD ["/srv/app/scripts/docker/start.sh"]
 
