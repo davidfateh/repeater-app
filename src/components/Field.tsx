@@ -11,12 +11,13 @@ import {
     Note
 } from '@contentful/forma-36-react-components';
 import {FieldExtensionSDK} from '@contentful/app-sdk';
-import {v4 as uuid} from 'uuid';
 import {ReturnSettings} from '../classes/ReturnsSettings';
 import {GlobalSettings} from '../classes/GlobalSettings';
 import {Item} from '../classes/Item';
 import {BaseSettings} from '../classes/BaseSettings';
 import optionFields from '../templates/option-fields.json'
+import {CartSettings} from '../classes/CartSettings';
+import {GwpSettings} from '../classes/GwpSettings';
 
 // Sets the interface for the sdk on props so it only uses thr Contentful FieldExtensionSDK
 interface FieldProps {
@@ -39,6 +40,10 @@ function getClass(value: string): any {
         return new ReturnSettings()
     } else if(value === 'globalSettings'){
         return new GlobalSettings()
+    } else if(value === 'cartSettings'){
+        return new CartSettings()
+    } else if(value === 'gwpSettings'){
+        return new GwpSettings()
     }
 }
 
@@ -73,7 +78,6 @@ const Field = (props: FieldProps) => {
     * */
     if (state.items.length === 0){
         let classObject = getClass(template)
-        const fields = classObject.getFields()
         const items = buildFields(classObject)
         setState({...state, selectedValue: template, items: items, class: classObject, dirty: true})
     }

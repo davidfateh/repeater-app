@@ -1,0 +1,34 @@
+{
+  "settingsType": "returnsSettings",
+  "fields":
+    {
+      "gwpActive":"false",
+      "productHandle":"",
+      "productVariantId": "",
+      "purchaseThreshold": "",
+      "collectionHandle":"",
+      "lockedHeader": "Want a [product]?",
+      "lockedSubheader": "Claim your free gift when you spend <b>$[threshold] or more</b>",
+      "lockedCopy": "Add items to your cart to unlock the offer"
+    },
+  "validation": {
+    "cartEmptyReturnButtonText": "string",
+    "productHandle": "string",
+    "productVariantId": "number",
+    "purchaseThreshold": "number",
+    "collectionHandle": "string",
+    "lockedHeader": "string",
+    "lockedSubheader": "string",
+    "lockedCopy": "string"
+  },
+  "helpText": {
+    "cartEmptyReturnButtonText":"Set to true to enable to GWP. False to disable.",
+    "productHandle": "Enter the nacelle handle of the product. Always kebab case i.e some-product-handle (never include /)",
+    "productVariantId": "The shopify variant id to be set as the GWP item. (Required)",
+    "purchaseThreshold": "Amount needed for the GWP to be unlocked. (Required)",
+    "collectionHandle": "Set to false if GWP threshold amount is not tied to any collection (collection-handle as fail safe for 'Key') Set to a valid collection handle to tie the GWP threshold amount to a specific collection (Required)",
+    "lockedHeader": "Copy text shown when GWP is locked. [product] is a tag that will be replaced with the product name.",
+    "lockedSubheader": "Copy text shown when cart subtotal amount is 0. Use [threshold] to dynamically pull in minimum.",
+    "lockedCopy": "Copy text shown when customer is below the threshold."
+  }
+}

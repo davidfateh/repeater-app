@@ -3,14 +3,20 @@
   "fields":
     {
       "globalFontToggle": "true",
-      "globalPromoFontFamily": "juana"
+      "globalPromoFontFamily": "juana",
+      "suggestedTerms": "Signature Hemmed Sheet Set|Duvet Set|Pillow|Bed Blankets|Flannel",
+      "serviceModuleIconsToggle": "false"
     },
   "helpText": {
     "globalFontToggle": "Use 'true' to put it live | Use 'false' to disable it",
-    "globalPromoFontFamily": "Available fonts are: juana, louize, fakt"
+    "globalPromoFontFamily": "Available fonts are: juana, louize, fakt",
+    "suggestedTerms": "The field is responsible to make the suggested search terms dynamic according to the values assigned here.",
+    "serviceModuleIconsToggle": "Set to true to show the service module icons. False to hide."
   },
   "validation": {
     "globalFontToggle": "string",
-    "globalPromoFontFamily": "string"
+    "globalPromoFontFamily": "string",
+    "suggestedTerms": "string",
+    "serviceModuleIconsToggle": "boolean"
   }
 }

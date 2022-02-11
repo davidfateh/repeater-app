@@ -5,8 +5,16 @@
       "value": "Global settings"
     },
     {
+      "id": "cartSettings",
+      "value": "Cart settings"
+    },
+    {
       "id": "returnsSettings",
       "value": "Returns settings"
+    },
+    {
+      "id": "gwpSettings",
+      "value": "GWP settings"
     }
   ]
 }

@@ -1,0 +1,31 @@
+{
+  "settingsType": "returnsSettings",
+  "fields":
+    {
+      "cartEmptyReturnButtonText":"Continue Shopping",
+      "cartEmptyCtaOneText": "Sheet Sets",
+      "cartEmptyCtaOneLink": "/collections/sheet-sets",
+      "cartEmptyCtaTwoText": "Bedding Essentials",
+      "cartEmptyCtaTwoLink": "/collections/bedding-inserts",
+      "cartEmptyCtaThreeText": "Bedding Essentials",
+      "cartEmptyCtaThreeLink": "/collections/bedding-inserts"
+    },
+  "validation": {
+    "cartEmptyReturnButtonText": "string",
+    "cartEmptyCtaOneText": "string",
+    "cartEmptyCtaOneLink": "string",
+    "cartEmptyCtaTwoText": "string",
+    "cartEmptyCtaTwoLink": "string",
+    "cartEmptyCtaThreeText": "string",
+    "cartEmptyCtaThreeLink": "string"
+  },
+  "helpText": {
+    "cartEmptyReturnButtonText":"Separate each button in order using | ",
+    "cartEmptyCtaOneText": "The text to show in the first button",
+    "cartEmptyCtaOneLink": "The url for the link in the terms copy to go to i.e /pages/faqs",
+    "cartEmptyCtaTwoText": "The text to show in the second button",
+    "cartEmptyCtaTwoLink": "The url for the link in the terms copy to go to i.e /pages/faqs",
+    "cartEmptyCtaThreeText": "The text to show in the third button",
+    "cartEmptyCtaThreeLink": "The url for the link in the terms copy to go to i.e /pages/faqs"
+  }
+}
