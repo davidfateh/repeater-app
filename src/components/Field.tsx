@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
     Button,
     EditorToolbarButton,
+    Option,
+    SelectField,
     Table,
     TableBody,
     TableRow,
@@ -34,13 +36,13 @@ function createItem(): Item {
     };
 }
 
-/** The Field component is the Repeater App which shows up 
+/** The Field component is the Repeater App which shows up
  * in the Contentful field.
- * 
+ *
  * The Field expects and uses a `Contentful JSON field`
  */
 const Field = (props: FieldProps) => {
-    const { valueName = 'Value' } = props.sdk.parameters.instance as any;
+    const { valueName = 'Value', itemName = 'Item Name', keyOptions = '' } = props.sdk.parameters.instance as any;
     const [items, setItems] = useState<Item[]>([]);
 
     useEffect(() => {
@@ -61,7 +63,7 @@ const Field = (props: FieldProps) => {
     };
 
     /** Creates an `onChange` handler for an item based on its `property`
-     * @returns A function which takes an `onChange` event 
+     * @returns A function which takes an `onChange` event
     */
     const createOnChangeHandler = (item: Item, property: 'key' | 'value') => (
         e: React.ChangeEvent<HTMLInputElement>
@@ -79,6 +81,46 @@ const Field = (props: FieldProps) => {
         props.sdk.field.setValue(items.filter((i) => i.id !== item.id));
     };
 
+
+    const createSelectOptions = () => {
+        const options: JSX.Element[] = [];
+        const keys = [''].concat(keyOptions.split(';').map((item: string) => item.trim()));
+
+        if (keys?.length > 0) {
+            keys.forEach((key: string) => {
+                options.push(<Option key={key} value={key}>{key}</Option>);
+            })
+        }
+        return options;
+    };
+
+    /** Determines the correct TableCell content based on presence of "key options" on the instnace */
+    const renderTableCell = (item: Item) => {
+        if(keyOptions?.length > 0) {
+            return (
+                <SelectField className="TypeDropDown_Select"
+                    value={item.key}
+                    id="key"
+                    name="key"
+                    labelText={itemName}
+                    onChange={createOnChangeHandler(item, 'key')}
+                >
+                    {createSelectOptions()}
+                </SelectField>
+            );
+        } else {
+            return (
+                <TextField
+                    id="key"
+                    name="key"
+                    labelText={itemName}
+                    value={item.key}
+                    onChange={createOnChangeHandler(item, 'key')}
+                />
+            );
+        }
+    };
+
     return (
         <div>
             <Table>
@@ -86,13 +128,7 @@ const Field = (props: FieldProps) => {
                     {items.map((item) => (
                         <TableRow key={item.id}>
                             <TableCell>
-                                <TextField
-                                    id="key"
-                                    name="key"
-                                    labelText="Item Name"
-                                    value={item.key}
-                                    onChange={createOnChangeHandler(item, 'key')}
-                                />
+                                {renderTableCell(item)}
                             </TableCell>
                             <TableCell>
                                 <TextField
