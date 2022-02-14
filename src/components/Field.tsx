@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
     Option,
     Select,
@@ -8,7 +8,9 @@ import {
     TableRow,
     TextField,
     FormLabel,
-    Note
+    Note,
+    Paragraph,
+    TextLink
 } from '@contentful/forma-36-react-components';
 import {FieldExtensionSDK} from '@contentful/app-sdk';
 import {ReturnSettings} from '../classes/ReturnsSettings';
@@ -26,6 +28,7 @@ interface FieldProps {
 
 // Set the structure for the Initial State object.
 interface InitialState {
+    selectEnabled: boolean
     selectedValue: string
     items: Item[]
     dirty: boolean,
@@ -65,6 +68,7 @@ const Field = (props: FieldProps) => {
 
     // Set up the initial state for the React state.
     const initState : any = {
+        selectEnabled: false,
         selectedValue: '',
         items: [],
         dirty: false,
@@ -72,7 +76,6 @@ const Field = (props: FieldProps) => {
     }
     const { template = 'globalSettings' } = props.sdk.parameters.instance as any;
     const [state, setState] = useState<InitialState>(initState);
-
     /*
     * Set the default items if there are no items in the field on load.
     * */
@@ -130,6 +133,8 @@ const Field = (props: FieldProps) => {
         setState({...state, dirty: true})
         // Update the field in Contentful
         props.sdk.field.setValue({...state, items: items, selectedValue: selected});
+
+        setState({...state, selectEnabled: false})
     };
 
     function createSelectOptions() {
@@ -143,23 +148,40 @@ const Field = (props: FieldProps) => {
         return items
     }
 
+    // @ts-ignore
+    const toggleSettingsEnabled = () => {
+        console.log( 'change clicked', state.selectEnabled );
+        state.selectEnabled = !state.selectEnabled;
+        setState({...state, selectEnabled: state.selectEnabled})
+        console.log( state.selectEnabled );
+    }
+
     /**
     * The render of the field itself.
     * */
     return (
         <div>
-            <Note noteType={'primary'} style={{marginBottom: '15px'}}>
-                Selecting a new settings type from the dropdown will reset your fields.
-                Reload the page without saving to revert.</Note>
-            <FormLabel htmlFor={'TypeDropDown_Select'}>Select a settings template</FormLabel>
             <div className="TypeDropDown" style={{marginBottom: '15px', padding: '5px'}}>
-                <Select className="TypeDropDown_Select"
-                        onChange={dropDownChangeHandler()}
-                        value={state.selectedValue}
 
-                >
-                    {createSelectOptions()}
-                </Select>
+                {!state.selectEnabled &&
+               <Paragraph element={'p'}>
+                   Selected settings: <b>{state.selectedValue}</b> <TextLink onClick={toggleSettingsEnabled}>Change selected</TextLink>
+               </Paragraph>}
+
+                {state.selectEnabled &&
+                <div style={{backgroundColor: '#edf4fc', padding: '15px'}}>
+                    <Note noteType={'primary'} style={{marginBottom: '15px'}}>
+                        Selecting a new settings type from the dropdown will reset your fields.
+                        Reload the page without saving to revert.</Note>
+                    <FormLabel htmlFor={'TypeDropDown_Select'}>Select a settings template</FormLabel>
+                    <Select className="TypeDropDown_Select"
+                            onChange={dropDownChangeHandler()}
+                            value={state.selectedValue}
+
+                    >
+                        {createSelectOptions()}
+                    </Select>
+                </div>}
             </div>
             <Table>
                 <TableBody>

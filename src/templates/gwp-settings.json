@@ -9,7 +9,12 @@
       "collectionHandle":"",
       "lockedHeader": "Want a [product]?",
       "lockedSubheader": "Claim your free gift when you spend <b>$[threshold] or more</b>",
-      "lockedCopy": "Add items to your cart to unlock the offer"
+      "lockedCopy": "Add items to your cart to unlock the offer",
+      "unlockedHeaderCopy": "Claim your complimentary gift",
+      "unlockedCopy": "Final sale - no returns or exchanges.",
+      "unlockedAddCopy": "Offer unlocked - add gift to cart",
+      "unlockedAddedCopy": "Added to cart successfully",
+      "footerMessage": "($128 value)"
     },
   "validation": {
     "cartEmptyReturnButtonText": "string",
@@ -19,7 +24,12 @@
     "collectionHandle": "string",
     "lockedHeader": "string",
     "lockedSubheader": "string",
-    "lockedCopy": "string"
+    "lockedCopy": "string",
+    "unlockedHeaderCopy": "string",
+    "unlockedCopy": "string",
+    "unlockedAddCopy": "string",
+    "unlockedAddedCopy": "string",
+    "footerMessage": "string"
   },
   "helpText": {
     "cartEmptyReturnButtonText":"Set to true to enable to GWP. False to disable.",
@@ -29,6 +39,11 @@
     "collectionHandle": "Set to false if GWP threshold amount is not tied to any collection (collection-handle as fail safe for 'Key') Set to a valid collection handle to tie the GWP threshold amount to a specific collection (Required)",
     "lockedHeader": "Copy text shown when GWP is locked. [product] is a tag that will be replaced with the product name.",
     "lockedSubheader": "Copy text shown when cart subtotal amount is 0. Use [threshold] to dynamically pull in minimum.",
-    "lockedCopy": "Copy text shown when customer is below the threshold."
+    "lockedCopy": "Copy text shown when customer is below the threshold.",
+    "unlockedHeaderCopy": "Copy text shown when customer has met the threshold.",
+    "unlockedCopy": "Helper copy text for unlocked gwp.",
+    "unlockedAddCopy": "Copy text shown when product is unlocked but it has not be added to cart",
+    "unlockedAddedCopy": "Copy text shown when the GWP item is added to cart",
+    "footerMessage": "Copy text shown at the bottom of GWP Unlocked"
   }
 }
