@@ -42,7 +42,7 @@ export abstract class BaseSettings {
     validate(items: Item[]): boolean {
         console.log( 'json', this.json );
         const validationFields = this.getValidationFields()
-
+        let result = true;
         console.log( 'validate', validationFields );
 
         items.forEach(item => {
@@ -51,6 +51,7 @@ export abstract class BaseSettings {
             // Reset the errors before running the validation again.
             item.error = ''
             // If there is a validation field which matches the item.
+
             if (validationField) {
                 const isValidNumber = item?.value?.match(/^\d*(\.\d+)?$/)
                 if (validationField.includes('>')) {
@@ -59,7 +60,7 @@ export abstract class BaseSettings {
                     const numCheckInt = parseInt(numberCheck)
                     if (!isNaN(numCheckInt)) {
                         if (parseInt(item.value) > numberCheck) {
-                            return
+                            return true
                         }
                     }
                 } else if (validationField.includes('<')) {
@@ -68,43 +69,44 @@ export abstract class BaseSettings {
                     const numCheckInt = parseInt(numberCheck)
                     if (!isNaN(numCheckInt)) {
                         if (parseInt(item.value) < numberCheck) {
-                            return
+                            return true
                         }
                     }
                 } else if (validationField === 'boolean') {
                     if (item.value === 'true' || item.value === 'false'){
-                        return
+                        return true
                     }
                 } else if (validationField === 'internal_url') {
                     if (item.value.match(/^(\/|(\/[a-zA-Z0-9\-]+)+)$/)){
-                        return
+                        return true
                     }
                 } else if (validationField === 'url') {
                     if (item.value.match(/^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-/]))?$/)){
-                        return
+                        return true
                     }
                 } else if (validationField === 'handle') {
                     if (item.value.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)){
-                        return
+                        return true
                     }
                 } else if (validationField === 'string' && typeof item?.value === validationField) {
-                    return
+                    return true
                 } else if (validationField === 'number' &&
                     typeof parseFloat(item?.value) === validationField &&
                     isValidNumber &&
                     !isNaN(parseFloat(item?.value))) {
                     // Check to make sure the value passes being converted into a number.
                     // Also check via regex that is only has numbers or is a valid float.
-                    return
+                    return true
                 } else if (item?.value === '') {
                     // If value is empty do nothing.
-                    return
+                    return true
                 }
                 item.error = 'This field is invalid, should be a ' + validationField
+                result = false;
+                return false
             }
         })
-
-        return false
+        return result
     }
 
     private getHelpTextFields(): any {
