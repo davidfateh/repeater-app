@@ -40,10 +40,8 @@ export abstract class BaseSettings {
      * Validate the json fields against the
      * */
     validate(items: Item[]): boolean {
-        console.log( 'json', this.json );
         const validationFields = this.getValidationFields()
         let result = true;
-        console.log( 'validate', validationFields );
 
         items.forEach(item => {
             const validationField = validationFields[item.key]
