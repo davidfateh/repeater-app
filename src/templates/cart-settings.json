@@ -1,5 +1,5 @@
 {
-  "settingsType": "returnsSettings",
+  "settingsType": "cartSettings",
   "fields":
     {
       "cartEmptyReturnButtonText":"Continue Shopping",

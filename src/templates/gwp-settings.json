@@ -1,5 +1,5 @@
 {
-  "settingsType": "returnsSettings",
+  "settingsType": "gwpSettings",
   "fields":
     {
       "gwpActive":"false",
@@ -17,6 +17,7 @@
       "footerMessage": "($128 value)"
     },
   "validation": {
+    "gwpActive":"boolean",
     "cartEmptyReturnButtonText": "string",
     "productHandle": "string",
     "productVariantId": "number",
@@ -32,7 +33,8 @@
     "footerMessage": "string"
   },
   "helpText": {
-    "cartEmptyReturnButtonText":"Set to true to enable to GWP. False to disable.",
+    "gwpActive":"Set to true to enable to GWP. False to disable.",
+    "cartEmptyReturnButtonText":"Text for the button when empty.",
     "productHandle": "Enter the nacelle handle of the product. Always kebab case i.e some-product-handle (never include /)",
     "productVariantId": "The shopify variant id to be set as the GWP item. (Required)",
     "purchaseThreshold": "Amount needed for the GWP to be unlocked. (Required)",

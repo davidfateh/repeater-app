@@ -14,7 +14,7 @@
     "serviceModuleIconsToggle": "Set to true to show the service module icons. False to hide."
   },
   "validation": {
-    "globalFontToggle": "string",
+    "globalFontToggle": "boolean",
     "globalPromoFontFamily": "string",
     "suggestedTerms": "string",
     "serviceModuleIconsToggle": "boolean"

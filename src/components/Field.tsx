@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Option,
     Select,
@@ -76,10 +76,12 @@ const Field = (props: FieldProps) => {
     }
     const { template = 'globalSettings' } = props.sdk.parameters.instance as any;
     const [state, setState] = useState<InitialState>(initState);
+
     /*
     * Set the default items if there are no items in the field on load.
     * */
     if (state.items.length === 0){
+        console.log( 'build blank' );
         let classObject = getClass(template)
         const items = buildFields(classObject)
         setState({...state, selectedValue: template, items: items, class: classObject, dirty: true})
@@ -92,11 +94,14 @@ const Field = (props: FieldProps) => {
         // Every time we change the value on the field, we update internal state
         props.sdk.field.onValueChanged((value: InitialState) => {
             if (value && state.dirty) {
-                console.log( 'dirty state', value );
-                setState({...state, selectedValue: value.selectedValue, items: value.items, dirty: false});
-                // Validate the inputs by passing over the changed fields.
-                // This is done through the fields sdk not state as the state is not updated in time.
-                state.class.validate(value.items)
+                const classObj = getClass(value.selectedValue)
+                setState({...state, class: classObj, selectedValue: value.selectedValue, items: value.items, dirty: false});
+                /** Validate the inputs by passing over the changed fields. Get the class in case it this is on load and
+                 *  we have default settings which pulls in whatever is set in the app defaults.
+                 * This is because react state will still reference the default state at this point not the current saved
+                 * state.
+                 */
+                classObj.validate(value.items)
             }
         });
         // The updated state is available here though. Just a note for future.
@@ -130,11 +135,10 @@ const Field = (props: FieldProps) => {
         // Build the items based on the fields from the classObject.
         const items = buildFields(classObj)
         // Set the state to dirty ready to update.
-        setState({...state, dirty: true})
+        // Set the selected Enabled back to false to hide it again.
+        setState({...state, selectEnabled: false, dirty: true})
         // Update the field in Contentful
         props.sdk.field.setValue({...state, items: items, selectedValue: selected});
-
-        setState({...state, selectEnabled: false})
     };
 
     function createSelectOptions() {
@@ -150,10 +154,8 @@ const Field = (props: FieldProps) => {
 
     // @ts-ignore
     const toggleSettingsEnabled = () => {
-        console.log( 'change clicked', state.selectEnabled );
         state.selectEnabled = !state.selectEnabled;
         setState({...state, selectEnabled: state.selectEnabled})
-        console.log( state.selectEnabled );
     }
 
     /**

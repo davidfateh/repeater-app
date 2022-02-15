@@ -40,10 +40,14 @@ export abstract class BaseSettings {
      * Validate the json fields against the
      * */
     validate(items: Item[]): boolean {
+        console.log( 'json', this.json );
         const validationFields = this.getValidationFields()
+
+        console.log( 'validate', validationFields );
 
         items.forEach(item => {
             const validationField = validationFields[item.key]
+            console.log( 'validationField: ' + validationField);
             // Reset the errors before running the validation again.
             item.error = ''
             // If there is a validation field which matches the item.
@@ -66,6 +70,22 @@ export abstract class BaseSettings {
                         if (parseInt(item.value) < numberCheck) {
                             return
                         }
+                    }
+                } else if (validationField === 'boolean') {
+                    if (item.value === 'true' || item.value === 'false'){
+                        return
+                    }
+                } else if (validationField === 'internal_url') {
+                    if (item.value.match(/^(\/|(\/[a-zA-Z0-9\-]+)+)$/)){
+                        return
+                    }
+                } else if (validationField === 'url') {
+                    if (item.value.match(/^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-/]))?$/)){
+                        return
+                    }
+                } else if (validationField === 'handle') {
+                    if (item.value.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)){
+                        return
                     }
                 } else if (validationField === 'string' && typeof item?.value === validationField) {
                     return

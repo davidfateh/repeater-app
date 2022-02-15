@@ -4,7 +4,7 @@
     {
       "ctaButtonCopy":"My Boll & Branch Order|A Gift - refunded with a Gift Card|Mattress Foundation, Mattress Topper & Rugs",
       "menuTermsCopy": "All Gift Returns will be refunded with a Boll & Branch Gift Card. Read our full return policy",
-      "menuTermsCopyCtaLink": "/pages/faqs",
+      "menuTermsCopyCtaLink": "https://bollandbranch.com/pages/faqs",
       "menuTermsCopyCtaCopy": "Click here.",
       "returnDays": "36",
       "excludedProductIds": "7555231937|5972011521|5110235201595|6657478131771"
@@ -12,7 +12,7 @@
   "validation": {
     "ctaButtonCopy": "string",
     "menuTermsCopy": "string",
-    "menuTermsCopyCtaLink": "string",
+    "menuTermsCopyCtaLink": "url",
     "menuTermsCopyCtaCopy": "string",
     "returnDays": "number",
     "excludedProductIds": "string"
