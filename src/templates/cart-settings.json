@@ -8,7 +8,14 @@
       "cartEmptyCtaTwoText": "Bedding Essentials",
       "cartEmptyCtaTwoLink": "/collections/bedding-inserts",
       "cartEmptyCtaThreeText": "Bedding Essentials",
-      "cartEmptyCtaThreeLink": "/collections/bedding-inserts"
+      "cartEmptyCtaThreeLink": "/collections/bedding-inserts",
+      "miniCartProgressToggle": "false",
+      "miniCartProgressDiscountValue": "20%",
+      "miniCartProgressThresholdAmount": "200",
+      "miniCartProgressEmptyCartCopy": "Get 20% off when you spend $200 or more",
+      "miniCartProgressThresholdMetCopy": "Congratulations! You get 20% off.",
+      "miniCartProgressThresholdNotMetCopy": "You're almost there...",
+      "miniCartProgressExcludedProducts": "gift-card"
     },
   "validation": {
     "cartEmptyReturnButtonText": "string",
@@ -17,7 +24,14 @@
     "cartEmptyCtaTwoText": "string",
     "cartEmptyCtaTwoLink": "string",
     "cartEmptyCtaThreeText": "string",
-    "cartEmptyCtaThreeLink": "string"
+    "cartEmptyCtaThreeLink": "string",
+    "miniCartProgressToggle": "boolean",
+    "miniCartProgressDiscountValue": "string",
+    "miniCartProgressThresholdAmount": "number",
+    "miniCartProgressEmptyCartCopy": "string",
+    "miniCartProgressThresholdMetCopy": "string",
+    "miniCartProgressThresholdNotMetCopy": "string",
+    "miniCartProgressExcludedProducts": "string"
   },
   "helpText": {
     "cartEmptyReturnButtonText":"Separate each button in order using | ",
@@ -26,6 +40,13 @@
     "cartEmptyCtaTwoText": "The text to show in the second button",
     "cartEmptyCtaTwoLink": "The url for the link in the terms copy to go to i.e /pages/faqs",
     "cartEmptyCtaThreeText": "The text to show in the third button",
-    "cartEmptyCtaThreeLink": "The url for the link in the terms copy to go to i.e /pages/faqs"
+    "cartEmptyCtaThreeLink": "The url for the link in the terms copy to go to i.e /pages/faqs",
+    "miniCartProgressToggle": "Toggle setting for progress bar.",
+    "miniCartProgressDiscountValue": "This value is used to display the discount message in various states of the progression.",
+    "miniCartProgressThresholdAmount": "Total amount of money needed to qualify for a promo",
+    "miniCartProgressEmptyCartCopy": "Message displayed in the empty mini-cart",
+    "miniCartProgressThresholdMetCopy": "Copy is displayed when the spending threshold is met.",
+    "miniCartProgressThresholdNotMetCopy" : "Copy is displayed when products added in cart but spending threshold is not met.",
+    "miniCartProgressExcludedProducts": "Product handles are that excluded from the mini cart progress. Separate handles with |"
   }
 }
