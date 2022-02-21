@@ -15,7 +15,7 @@
       "miniCartProgressEmptyCartCopy": "Get 20% off when you spend $200 or more",
       "miniCartProgressThresholdMetCopy": "Congratulations! You get 20% off.",
       "miniCartProgressThresholdNotMetCopy": "You're almost there...",
-      "miniCartProgressExcludedProducts": "gift-card"
+      "miniCartProgressExcludedProducts": "gift-card|digital-gift-card"
     },
   "validation": {
     "cartEmptyReturnButtonText": "string",

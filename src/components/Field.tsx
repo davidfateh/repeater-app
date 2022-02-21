@@ -106,9 +106,14 @@ const Field = (props: FieldProps) => {
         // The updated state is available here though. Just a note for future.
     });
 
-    // useEffect(() => {
-    //     console.log( 'select selectEnabled', state.selectEnabled );
-    // }, [state.selectEnabled]);
+    /*
+    * Watch for state changes on the selectEnabled.
+    *
+    * There's currently a bug where this does not happen unless we are watching it specifically with useEffect()
+    * */
+    useEffect(() => {
+
+    }, [state.selectEnabled]);
 
 
     /** Creates an `onChange` handler for an item based on its `property`
