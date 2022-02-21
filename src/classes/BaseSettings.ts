@@ -45,7 +45,6 @@ export abstract class BaseSettings {
 
         items.forEach(item => {
             const validationField = validationFields[item.key]
-            console.log( 'validationField: ' + validationField);
             // Reset the errors before running the validation again.
             item.error = ''
             // If there is a validation field which matches the item.
