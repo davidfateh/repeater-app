@@ -81,7 +81,6 @@ const Field = (props: FieldProps) => {
     * Set the default items if there are no items in the field on load.
     * */
     if (state.items.length === 0){
-        console.log( 'build blank' );
         let classObject = getClass(template)
         const items = buildFields(classObject)
         setState({...state, selectedValue: template, items: items, class: classObject, dirty: true})
@@ -106,6 +105,11 @@ const Field = (props: FieldProps) => {
         });
         // The updated state is available here though. Just a note for future.
     });
+
+    // useEffect(() => {
+    //     console.log( 'select selectEnabled', state.selectEnabled );
+    // }, [state.selectEnabled]);
+
 
     /** Creates an `onChange` handler for an item based on its `property`
      * @returns A function which takes an `onChange` event
@@ -139,6 +143,7 @@ const Field = (props: FieldProps) => {
         setState({...state, selectEnabled: false, dirty: true})
         // Update the field in Contentful
         props.sdk.field.setValue({...state, items: items, selectedValue: selected});
+
     };
 
     function createSelectOptions() {
