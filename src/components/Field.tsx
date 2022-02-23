@@ -103,7 +103,8 @@ const Field = (props: FieldProps) => {
                 classObj.validate(value.items)
             }
         });
-        // The updated state is available here though. Just a note for future.
+        // The state is available here but might not always be "ready".
+        // To access the react state directly, use a "useEffect" below like where we are watching the selectEnabled.
     });
 
     /*
