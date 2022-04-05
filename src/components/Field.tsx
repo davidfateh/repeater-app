@@ -23,6 +23,7 @@ interface Item {
   id: string;
   key: string;
   value: string;
+  comparator: string;
 }
 
 /** A simple utility function to create a 'blank' item
@@ -32,7 +33,8 @@ function createItem(): Item {
   return {
     id: uuid(),
     key: "",
-    value: ""
+    value: "",
+    comparator: ""
   };
 }
 
@@ -43,6 +45,8 @@ function createItem(): Item {
  */
 const Field = (props: FieldProps) => {
   const {
+    comparatorName = "Comparator",
+    comparatorOptions = "equal;not equal",
     valueName = "Value",
     itemName = "Item Name",
     keyOptions = ""
@@ -69,23 +73,42 @@ const Field = (props: FieldProps) => {
   /** Creates an `onChange` handler for an item based on its `property`
    * @returns A function which takes an `onChange` event
    */
-  const createOnChangeHandler =
-    (item: Item, property: "key" | "value") =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const itemList = items.concat();
-      const index = itemList.findIndex((i) => i.id === item.id);
+  const createOnChangeHandler = (
+    item: Item,
+    property: "comparator" | "key" | "value"
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const itemList = items.concat();
+    const index = itemList.findIndex((i) => i.id === item.id);
 
-      itemList.splice(index, 1, { ...item, [property]: e.target.value });
+    itemList.splice(index, 1, { ...item, [property]: e.target.value });
 
-      props.sdk.field.setValue(itemList);
-    };
+    props.sdk.field.setValue(itemList);
+  };
 
   /** Deletes an item from the list */
   const deleteItem = (item: Item) => {
     props.sdk.field.setValue(items.filter((i) => i.id !== item.id));
   };
 
-  const createSelectOptions = () => {
+  const createSelectOptionsForComparator = () => {
+    const options: JSX.Element[] = [];
+    const keys = [""].concat(
+      comparatorOptions.split(";").map((item: string) => item.trim())
+    );
+
+    if (keys?.length > 0) {
+      keys.forEach((key: string) => {
+        options.push(
+          <Option key={key} value={key}>
+            {key}
+          </Option>
+        );
+      });
+    }
+    return options;
+  };
+
+  const createSelectOptionsForKey = () => {
     const options: JSX.Element[] = [];
     const keys = [""].concat(
       keyOptions.split(";").map((item: string) => item.trim())
@@ -115,7 +138,7 @@ const Field = (props: FieldProps) => {
           labelText={itemName}
           onChange={createOnChangeHandler(item, "key")}
         >
-          {createSelectOptions()}
+          {createSelectOptionsForKey()}
         </SelectField>
       );
     } else {
@@ -137,6 +160,18 @@ const Field = (props: FieldProps) => {
         <TableBody>
           {items.map((item) => (
             <TableRow key={item.id}>
+              <TableCell>
+                <SelectField
+                  className="TypeDropDown_Select"
+                  value={item.comparator}
+                  id="comparator"
+                  name="comparator"
+                  labelText={comparatorName}
+                  onChange={createOnChangeHandler(item, "comparator")}
+                >
+                  {createSelectOptionsForComparator()}
+                </SelectField>
+              </TableCell>
               <TableCell>{renderTableCell(item)}</TableCell>
               <TableCell>
                 <TextField
