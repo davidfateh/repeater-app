@@ -23,7 +23,7 @@ interface Item {
   id: string;
   key: string;
   value: string;
-  comparator: string;
+  thirdField: string;
 }
 
 /** A simple utility function to create a 'blank' item
@@ -34,7 +34,7 @@ function createItem(): Item {
     id: uuid(),
     key: "",
     value: "",
-    comparator: ""
+    thirdField: ""
   };
 }
 
@@ -45,8 +45,8 @@ function createItem(): Item {
  */
 const Field = (props: FieldProps) => {
   const {
-    comparatorName = "Comparator",
-    comparatorOptions = "equal;not equal",
+    thirdFieldName = "Third Field Name",
+    thirdFieldOptions = "",
     valueName = "Value",
     itemName = "Item Name",
     keyOptions = ""
@@ -73,27 +73,26 @@ const Field = (props: FieldProps) => {
   /** Creates an `onChange` handler for an item based on its `property`
    * @returns A function which takes an `onChange` event
    */
-  const createOnChangeHandler = (
-    item: Item,
-    property: "comparator" | "key" | "value"
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const itemList = items.concat();
-    const index = itemList.findIndex((i) => i.id === item.id);
+  const createOnChangeHandler =
+    (item: Item, property: "key" | "value" | "thirdField") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const itemList = items.concat();
+      const index = itemList.findIndex((i) => i.id === item.id);
 
-    itemList.splice(index, 1, { ...item, [property]: e.target.value });
+      itemList.splice(index, 1, { ...item, [property]: e.target.value });
 
-    props.sdk.field.setValue(itemList);
-  };
+      props.sdk.field.setValue(itemList);
+    };
 
   /** Deletes an item from the list */
   const deleteItem = (item: Item) => {
     props.sdk.field.setValue(items.filter((i) => i.id !== item.id));
   };
 
-  const createSelectOptionsForComparator = () => {
+  const createSelectOptionsForThirdFieldOption = () => {
     const options: JSX.Element[] = [];
     const keys = [""].concat(
-      comparatorOptions.split(";").map((item: string) => item.trim())
+      thirdFieldOptions.split(";").map((item: string) => item.trim())
     );
 
     if (keys?.length > 0) {
@@ -127,7 +126,7 @@ const Field = (props: FieldProps) => {
   };
 
   /** Determines the correct TableCell content based on presence of "key options" on the instnace */
-  const renderTableCell = (item: Item) => {
+  const renderKeyTableCell = (item: Item) => {
     if (keyOptions?.length > 0) {
       return (
         <SelectField
@@ -154,25 +153,40 @@ const Field = (props: FieldProps) => {
     }
   };
 
+  const renderThirdFieldTableCell = (item: Item) => {
+    if (keyOptions?.length > 0) {
+      return (
+        <SelectField
+          className="TypeDropDown_Select"
+          value={item.thirdField}
+          id="thirdField"
+          name="thirdField"
+          labelText={thirdFieldName}
+          onChange={createOnChangeHandler(item, "thirdField")}
+        >
+          {createSelectOptionsForThirdFieldOption()}
+        </SelectField>
+      );
+    } else {
+      return (
+        <TextField
+          id="thirdField"
+          name="thirdField"
+          labelText={thirdFieldName}
+          value={item.thirdField}
+          onChange={createOnChangeHandler(item, "thirdField")}
+        />
+      );
+    }
+  };
+
   return (
     <div>
       <Table>
         <TableBody>
           {items.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>
-                <SelectField
-                  className="TypeDropDown_Select"
-                  value={item.comparator}
-                  id="comparator"
-                  name="comparator"
-                  labelText={comparatorName}
-                  onChange={createOnChangeHandler(item, "comparator")}
-                >
-                  {createSelectOptionsForComparator()}
-                </SelectField>
-              </TableCell>
-              <TableCell>{renderTableCell(item)}</TableCell>
+              <TableCell>{renderKeyTableCell(item)}</TableCell>
               <TableCell>
                 <TextField
                   id="value"
@@ -182,6 +196,7 @@ const Field = (props: FieldProps) => {
                   onChange={createOnChangeHandler(item, "value")}
                 />
               </TableCell>
+              <TableCell>{renderThirdFieldTableCell(item)}</TableCell>
               <TableCell align="right">
                 <EditorToolbarButton
                   label="delete"
