@@ -154,7 +154,7 @@ const Field = (props: FieldProps) => {
   };
 
   const renderThirdFieldTableCell = (item: Item) => {
-    if (keyOptions?.length > 0) {
+    if (thirdFieldOptions?.length > 0) {
       return (
         <SelectField
           className="TypeDropDown_Select"
