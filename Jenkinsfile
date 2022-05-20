@@ -157,32 +157,32 @@ pipeline {
       }
     }
 
-    // stage('Send Build End Notification') {
-    //   steps {
-    //     script {
-    //         slackSend channel: '#deployments',
-    //         color: 'bad',
-    //         message: "pensieve ${git_branch.toUpperCase()} Build COMPLETE!",
-    //         teamDomain: 'bollandbranch',
-    //         tokenCredentialId: 'deploybot-slack-credentials',
-    //         username: "deploybot",
-    //         botUser: "false"
-    //     }
-    //   }
-    // }
+    stage('Send Build End Notification') {
+      steps {
+        script {
+            slackSend channel: '#dev-frontend-deploys',
+            color: 'good',
+            message: "Pensieve Build Complete: `${git_branch.toUpperCase()}` <${BUILD_URL}|[Build]>",
+            teamDomain: 'bollandbranch',
+            tokenCredentialId: 'deploybot-slack-credentials',
+            username: "deploybot",
+            botUser: "false"
+        }
+      }
+    }
 
   }
-  // post {
-  //   failure {
-  //     script {
-  //       slackSend channel: '#deployments',
-  //         color: 'good',
-  //         message: "pensieve ${git_branch.toUpperCase()} Build FAILURE!",
-  //         teamDomain: 'bollandbranch',
-  //         tokenCredentialId: 'deploybot-slack-credentials',
-  //         username: "deploybot",
-  //         botUser: "false"
-  //     }
-  //   }
-  // }
+   post {
+     failure {
+       script {
+         slackSend channel: '#dev-frontend-deploys',
+           color: 'danger',
+           message: "Pensieve Build Failure: `${git_branch.toUpperCase()}` <${BUILD_URL}|[Build]>",
+           teamDomain: 'bollandbranch',
+           tokenCredentialId: 'deploybot-slack-credentials',
+           username: "deploybot",
+           botUser: "false"
+       }
+     }
+   }
 }
