@@ -5,18 +5,21 @@
       "globalFontToggle": "true",
       "globalPromoFontFamily": "juana",
       "suggestedTerms": "Signature Hemmed Sheet Set|Duvet Set|Pillow|Bed Blankets|Flannel",
-      "serviceModuleIconsToggle": "false"
+      "serviceModuleIconsToggle": "false",
+      "defaultCollectionProductImage": "https://nacelle-assets.s3-us-west-2.amazonaws.com/default-product-image.svg"
     },
   "helpText": {
     "globalFontToggle": "Use 'true' to put it live | Use 'false' to disable it",
     "globalPromoFontFamily": "Available fonts are: juana, louize, fakt",
     "suggestedTerms": "The field is responsible to make the suggested search terms dynamic according to the values assigned here.",
-    "serviceModuleIconsToggle": "Set to true to show the service module icons. False to hide."
+    "serviceModuleIconsToggle": "Set to true to show the service module icons. False to hide.",
+    "defaultCollectionProductImage": "The full image url of the back up product placeholder when there is no product image available."
   },
   "validation": {
     "globalFontToggle": "boolean",
     "globalPromoFontFamily": "string",
     "suggestedTerms": "string",
-    "serviceModuleIconsToggle": "boolean"
+    "serviceModuleIconsToggle": "boolean",
+    "defaultCollectionProductImage": "url"
   }
 }
