@@ -1,0 +1,39 @@
+{
+  "settingsType": "collectionSubnavSettings",
+  "fields": {
+    "link1": "Signature Sheet | signature-fabric | false",
+    "link2": "Signature Sheet | signature-fabric | false",
+    "link3": "Signature Sheet | signature-fabric | false",
+    "link4": "Signature Sheet | signature-fabric | false",
+    "link5": "Signature Sheet | signature-fabric | false",
+    "link6": "Signature Sheet | signature-fabric | false",
+    "link7": "",
+    "link8": "",
+    "link9": "",
+    "link10": ""
+  },
+  "validation": {
+    "link1": "string",
+    "link2": "string",
+    "link3": "string",
+    "link4": "string",
+    "link5": "string",
+    "link6": "string",
+    "link7": "string",
+    "link8": "string",
+    "link9": "string",
+    "link10": "string"
+  },
+  "helpText": {
+    "link1": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link2": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link3": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link4": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link5": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link6": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link7": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link8": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link9": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed",
+    "link10": "Separate items by | - EX: [LINK TITLE] | [SECTION HANDLE] (or url) | [false/true] (true if to another page/url). Leave Blank if not needed"
+  }
+}

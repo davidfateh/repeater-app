@@ -15,6 +15,10 @@
     {
       "id": "gwpSettings",
       "value": "GWP settings"
+    },
+    {
+      "id": "collectionSubnavSettings",
+      "value": "Collection Subnav Settings"
     }
   ]
 }
