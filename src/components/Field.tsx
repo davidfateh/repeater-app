@@ -21,6 +21,7 @@ import optionFields from '../templates/option-fields.json';
 import { CartSettings } from '../classes/CartSettings';
 import { GwpSettings } from '../classes/GwpSettings';
 import { CollectionSubnavSettings } from '../classes/CollectionSubnavSettings';
+import {MobileContentSectionSettings} from '../classes/MobileContentSectionSettings';
 
 // Sets the interface for the sdk on props so it only uses thr Contentful FieldExtensionSDK
 interface FieldProps {
@@ -50,6 +51,8 @@ function getClass(value: string): any {
     return new GwpSettings();
   } else if (value === 'collectionSubnavSettings') {
     return new CollectionSubnavSettings();
+  } else if (value === 'mobileContentSectionSettings') {
+    return new MobileContentSectionSettings();
   }
 }
 

@@ -1,0 +1,18 @@
+{
+  "settingsType": "mobileContentSectionSettings",
+  "fields": {
+    "imageUrl": "https://via.placeholder.com/80x80",
+    "title": "",
+    "subtitle": ""
+  },
+  "validation": {
+    "link1": "url",
+    "title": "string",
+    "subtitle": "string"
+  },
+  "helpText": {
+    "link1": "Enter a full url for the image",
+    "title": "Enter the title for the mobile content section",
+    "subtitle": "Enter the subtitle for the mobile content section"
+  }
+}
